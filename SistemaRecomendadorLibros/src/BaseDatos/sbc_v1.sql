@@ -80,7 +80,7 @@ CREATE TABLE `clientes` (
   `user` varchar(100) NOT NULL,
   `pass` varchar(100) NOT NULL,
   PRIMARY KEY (`idCliente`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,6 +89,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'Carlos Peréz',1,1980,'carlos','carlos'),(2,'María Cuenca',2,1955,'maria','maria'),(3,'Luis Cabrera',1,1989,'luis','luis'),(4,'Arturo López',2,1987,'arturo','arturo'),(5,'Roberto Suarez',1,1990,'roberto','roberto');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +161,7 @@ CREATE TABLE `paises` (
   `idPais` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pais` varchar(50) NOT NULL,
   PRIMARY KEY (`idPais`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-04 11:52:04
+-- Dump completed on 2011-05-04 12:05:01
