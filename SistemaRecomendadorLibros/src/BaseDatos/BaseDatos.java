@@ -9,8 +9,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objetos.Libros;
 
 /**
  *
@@ -26,7 +28,7 @@ public class BaseDatos {
     private String ip = "localhost";
     private String usr = "root";
     private String pass = "";
-    private ResultSet rs = null;
+    //private ResultSet rs = null;
 
     public BaseDatos() {
         ConexionBase();
@@ -166,7 +168,7 @@ public class BaseDatos {
      */
     public String obtenerNombreCategoria(int idCategoria) {
         try {
-            String sql = "SELECT NOMBRE FROM AUTORES WHERE IDCATEGORIA=" + idCategoria;
+            String sql = "SELECT NOMBRE FROM CATEGORIAS WHERE IDCATEGORIA=" + idCategoria;
             return ejecutarConsultaUnDato(sql).getString("NOMBRE");
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,8 +184,10 @@ public class BaseDatos {
      */
     public String obtenerNombreIdioma(int idIdioma) {
         try {
-            String sql = "SELECT IDIOMA FROM AUTORES WHERE IDIDIOMA=" + idIdioma;
-            return ejecutarConsultaUnDato(sql).getString("IDIOMA");
+            String sql = "SELECT IDIOMA FROM IDIOMAS WHERE IDIDIOMA=" + idIdioma;
+            ResultSet rsIdioma = ejecutarConsultaUnDato(sql);
+            String nombre = rsIdioma.getString("IDIOMA");
+            return nombre;
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -198,7 +202,7 @@ public class BaseDatos {
      */
     public String obtenerNombrePais(int idPais) {
         try {
-            String sql = "SELECT PAIS FROM AUTORES WHERE IDPAIS=" + idPais;
+            String sql = "SELECT PAIS FROM PAISES WHERE IDPAIS=" + idPais;
             return ejecutarConsultaUnDato(sql).getString("PAIS");
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,7 +211,7 @@ public class BaseDatos {
     }
 
     public ResultSet obtenerInformacionLibro(int idLibro) {
-        String sql ="SELECT "
+        String sql = "SELECT "
                 + "IDLIBRO,"
                 + "TITULO,"
                 + "PRECIO,"
@@ -221,7 +225,27 @@ public class BaseDatos {
                 + "IDCATEGORIA,"
                 + "IDAUTOR,"
                 + "IMG "
-                + "FROM LIBROS ;";
+                + "FROM LIBROS "
+                + "WHERE IDLIBRO=" + idLibro;
         return ejecutarConsultaUnDato(sql);
+    }
+
+    public ArrayList<Libros> obtenerLibrosPorTitulo(String txtIngresado, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE TITULO like '%" + txtIngresado + "%'";
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
