@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -139,5 +140,74 @@ public class BaseDatos {
         } catch (NullPointerException ex) {
             System.out.println("NO está abierta la base de datos...");
         }
+    }
+
+    /**
+     * Obtiene el nombre del Autor según el id de este, null si no
+     * encuentra nada
+     * @param idAutor
+     * @return String
+     */
+    public String obtenerNombreAutor(int idAutor) {
+        try {
+            String sql = "SELECT NOMBRE FROM AUTORES WHERE IDAUTOR=" + idAutor;
+            return ejecutarConsultaUnDato(sql).getString("NOMBRE");
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene el nombre de la categoria segun el id que se le envie, null si no
+     * encuentra nada
+     * @param idCategoria
+     * @return String
+     */
+    public String obtenerNombreCategoria(int idCategoria) {
+        try {
+            String sql = "SELECT NOMBRE FROM AUTORES WHERE IDCATEGORIA=" + idCategoria;
+            return ejecutarConsultaUnDato(sql).getString("NOMBRE");
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Se obtiene el idioma a partir del id
+     * retorna null si no hay valores
+     * @param idIdioma
+     * @return String
+     */
+    public String obtenerNombreIdioma(int idIdioma) {
+        try {
+            String sql = "SELECT IDIOMA FROM AUTORES WHERE IDIDIOMA=" + idIdioma;
+            return ejecutarConsultaUnDato(sql).getString("IDIOMA");
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Se obtiene el NOMBRE DEL PAIS a partir del id
+     * retorna null si no hay valores
+     * @param idPais
+     * @return String
+     */
+    public String obtenerNombrePais(int idPais) {
+        try {
+            String sql = "SELECT PAIS FROM AUTORES WHERE IDPAIS=" + idPais;
+            return ejecutarConsultaUnDato(sql).getString("PAIS");
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ResultSet obtenerInformacionLibro(int idLibro) {
+        String sql ="";
+        return null;
     }
 }
