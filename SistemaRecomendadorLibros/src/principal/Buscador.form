@@ -161,7 +161,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblIngreso" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtTitulo" pref="698" max="32767" attributes="0"/>
+                  <Component id="txtTextoBuscar" pref="698" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -172,7 +172,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTextoBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -185,7 +185,7 @@
             <Property name="text" type="java.lang.String" value="T&#xed;tulo del Libro:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTitulo">
+        <Component class="javax.swing.JTextField" name="txtTextoBuscar">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Ingrese el titulo del libro"/>
           </Properties>
@@ -201,11 +201,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblValores" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txtAnioIni1" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="txtValIni" min="-2" pref="62" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" pref="20" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txtAnioFin1" min="-2" pref="63" max="-2" attributes="0"/>
+                  <Component id="txtValFin" min="-2" pref="63" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblMoneda" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -218,9 +218,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblValores" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAnioIni1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtValIni" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAnioFin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtValFin" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblMoneda" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -234,10 +234,13 @@
             <Property name="text" type="java.lang.String" value="Precio entre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtAnioIni1">
+        <Component class="javax.swing.JTextField" name="txtValIni">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Ingrese el titulo del libro"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtValIniFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
@@ -245,10 +248,13 @@
             <Property name="text" type="java.lang.String" value="y"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtAnioFin1">
+        <Component class="javax.swing.JTextField" name="txtValFin">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Ingrese el titulo del libro"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtValFinFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMoneda">
           <Properties>

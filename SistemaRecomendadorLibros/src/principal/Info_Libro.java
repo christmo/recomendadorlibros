@@ -3,10 +3,12 @@
  *
  * Created on 04/05/2011, 03:47:32 PM
  */
-
 package principal;
 
+import BaseDatos.BaseDatos;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import objetos.Libros;
 
 /**
  *
@@ -17,10 +19,20 @@ public class Info_Libro extends javax.swing.JFrame {
     private int idLibro1;
     private int idLibro2;
     private int idLibro3;
+    private Libros informacionLibro;
 
     /** Creates new form Info_Libro */
     public Info_Libro() {
         initComponents();
+    }
+
+    Info_Libro(Libros libroSeleccionado, BaseDatos bd) {
+        initComponents();
+        this.informacionLibro = libroSeleccionado;
+    }
+
+    public void setLibroSeleccionado(Libros libroSeleccionado) {
+        this.informacionLibro = libroSeleccionado;
     }
 
     @SuppressWarnings("unchecked")
@@ -252,22 +264,20 @@ public class Info_Libro extends javax.swing.JFrame {
 }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void lblLibro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro1MouseClicked
-        JOptionPane.showMessageDialog(this,"2", "1",1);
+        JOptionPane.showMessageDialog(this, "2", "1", 1);
     }//GEN-LAST:event_lblLibro1MouseClicked
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Info_Libro().setVisible(true);
             }
         });
     }
-
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton1;
@@ -332,10 +342,10 @@ public class Info_Libro extends javax.swing.JFrame {
     public void setLblBestSeller(boolean BS) {
         if (BS) {
             this.lblBestSeller.setText("Best-Seller");
-        }else{
+        } else {
             this.lblBestSeller.setText("");
         }
-        
+
     }
 
     /**
@@ -480,5 +490,4 @@ public class Info_Libro extends javax.swing.JFrame {
     public void setTxtReview(String Review) {
         this.txtReview.setText(Review);
     }
-
 }

@@ -230,12 +230,146 @@ public class BaseDatos {
         return ejecutarConsultaUnDato(sql);
     }
 
+    /**
+     * Obtiene la lista de libros que se encuentren con un titulo determinado
+     * @param txtIngresado
+     * @param bd
+     * @return ArrayList<Libros>
+     */
     public ArrayList<Libros> obtenerLibrosPorTitulo(String txtIngresado, BaseDatos bd) {
         ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
         String sql = "SELECT "
                 + "IDLIBRO "
                 + "FROM LIBROS "
                 + "WHERE TITULO like '%" + txtIngresado + "%'";
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la lista de libros que se encuenten dentro de una categoria determinada
+     * @param txtIngresado
+     * @param bd
+     * @return ArrayList<Libros>
+     */
+    public ArrayList<Libros> obtenerLibrosPorCategoria(String txtIngresado, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE CATEGORIA like '%" + txtIngresado + "%'";
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la lista de libros que dentro de su resumen contenga ciertas
+     * palabras clave
+     * @param txtIngresado
+     * @param bd
+     * @return ArrayList<Libros>
+     */
+    public ArrayList<Libros> obtenerLibrosPorPalabraClave(String txtIngresado, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE RESUMEN like '%" + txtIngresado + "%'";
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la lista de libros que correspondan a un autor especifico
+     * @param txtIngresado
+     * @param bd
+     * @return ArrayList<Libros>
+     */
+    public ArrayList<Libros> obtenerLibrosPorAutor(String txtIngresado, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE AUTOR like '%" + txtIngresado + "%'";
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la lista de libros que se encunetran en un rango de años ingresado
+     * @param txtValorInicial
+     * @param txtValorFinal
+     * @param bd
+     * @return ArrayList<Libros>
+     */
+    public ArrayList<Libros> obtenerLibrosPorAnios(String txtValorInicial, String txtValorFinal, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE ANIOLANZAMIENTO BETWEEN " + txtValorInicial + " AND " + txtValorFinal;
+        ResultSet rsLibros = ejecutarConsulta(sql);
+        try {
+            while (rsLibros.next()) {
+                Libros l = new Libros(rsLibros.getInt("IDLIBRO"), bd);
+                librosEncontrados.add(l);
+            }
+            return librosEncontrados;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la lista de libros que se encuentran en un rango de precios
+     * @param txtValorInicial
+     * @param txtValorFinal
+     * @param bd
+     * @return ArrayList<Libros>
+     */
+    public ArrayList<Libros> obtenerLibrosPorPrecio(String txtValorInicial, String txtValorFinal, BaseDatos bd) {
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        String sql = "SELECT "
+                + "IDLIBRO "
+                + "FROM LIBROS "
+                + "WHERE PRECIO BETWEEN " + txtValorInicial + " AND " + txtValorFinal;
         ResultSet rsLibros = ejecutarConsulta(sql);
         try {
             while (rsLibros.next()) {

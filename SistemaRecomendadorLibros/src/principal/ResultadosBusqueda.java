@@ -10,9 +10,10 @@
  */
 package principal;
 
-import objetos.Libros;
 import BaseDatos.BaseDatos;
+import objetos.Libros;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,14 +22,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ResultadosBusqueda extends javax.swing.JFrame {
 
-    DefaultTableModel dtm;
+    private DefaultTableModel dtm;
+    private Info_Libro info = null;
+    private BaseDatos bd;
+    private ArrayList<Libros> listaLibros;
 
     /** Creates new form ResultadosBusqueda */
     public ResultadosBusqueda() {
         initComponents();
     }
 
-    public ResultadosBusqueda(ArrayList<Libros> listaLibros) {
+    public ResultadosBusqueda(ArrayList<Libros> listaLibros, BaseDatos bd) {
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/iconos/idea.png")).getImage());
+        this.bd = bd;
+        this.listaLibros = listaLibros;
         llenarTablasLibros(listaLibros);
     }
 
@@ -47,6 +55,7 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Resultados de Busqueda");
 
         lstLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,6 +68,12 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
                 "Título", "Autor", "Categoría", "Precio"
             }
         ));
+        lstLibros.setNextFocusableComponent(btnRegresar);
+        lstLibros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lstLibrosMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstLibros);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18));
@@ -108,6 +123,27 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void lstLibrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstLibrosMousePressed
+        int intClicks = evt.getClickCount();
+        int intBoton = evt.getButton();
+
+        if (intClicks == 1 && intBoton == 1) {
+            int opSelect = listaLibros.size() - lstLibros.getSelectedRow() - 1;
+            System.out.println("" + listaLibros.get(opSelect).getTitulo());
+            try {
+                if (info == null) {
+                    info = new Info_Libro(listaLibros.get(opSelect), bd);
+                    info.setVisible(true);
+                } else {
+                    info.setLibroSeleccionado(listaLibros.get(opSelect));
+                    info.setVisible(true);
+                    info.setLocationRelativeTo(this);
+                }
+            } catch (ArrayIndexOutOfBoundsException aex) {
+            }
+        }
+    }//GEN-LAST:event_lstLibrosMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -127,6 +163,7 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void llenarTablasLibros(ArrayList<Libros> listaLibros) {
+        limpiarTablaBusqueda();
         dtm = (DefaultTableModel) lstLibros.getModel();
 
         for (Libros l : listaLibros) {
@@ -137,6 +174,21 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
                 "" + l.getPrecio()
             };
             dtm.insertRow(0, datos);
+        }
+    }
+
+    /**
+     * Limpia las filas de la tabla
+     */
+    private void limpiarTablaBusqueda() {
+//        try {
+//            listaLibros.clear();
+//        } catch (NullPointerException ex) {
+//        }
+        dtm = (DefaultTableModel) lstLibros.getModel();
+        int n_filas = lstLibros.getRowCount();
+        for (int i = 0; i < n_filas; i++) {
+            dtm.removeRow(0);
         }
     }
 }

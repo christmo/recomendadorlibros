@@ -201,9 +201,10 @@ public class LoginGUI extends javax.swing.JFrame {
                 if (boolUsuario) {
                     if (boolClave) {
                         /**
-                         * Sesion 
-                         * [0]IDCLIENTE,
-                         * [1]NOMBRE,
+                         * Sesion
+                         * [0]User
+                         * [1]IDCLIENTE,
+                         * [2]NOMBRE,
                          */
                         String sesion[] = {
                             strUser,

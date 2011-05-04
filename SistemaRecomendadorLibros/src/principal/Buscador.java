@@ -11,7 +11,10 @@
 package principal;
 
 import BaseDatos.BaseDatos;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import objetos.Libros;
 
 /**
  *
@@ -20,7 +23,10 @@ import javax.swing.ImageIcon;
 public class Buscador extends javax.swing.JFrame {
 
     private BaseDatos bd;
-    private String[] sesion;
+    //private String[] sesion;
+    private String txtIngresado = "";
+    private String txtValorInicial = "";
+    private String txtValorFinal = "";
 
     /** Creates new form Buscador */
     public Buscador() {
@@ -31,10 +37,10 @@ public class Buscador extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/iconos/idea.png")).getImage());
         this.bd = bd;
-        this.sesion = sesion;
+        //this.sesion = sesion;
         pnlIngresoTexto.setVisible(false);
         pnlRangoValores.setVisible(false);
-        this.setTitle("Rocomendador de Libros - Bienvenido " + sesion[1]);
+        this.setTitle("Rocomendador de Libros - Bienvenido " + sesion[2]);
     }
 
     /** This method is called from within the constructor to
@@ -53,12 +59,12 @@ public class Buscador extends javax.swing.JFrame {
         cbxBuscarPor = new javax.swing.JComboBox();
         pnlIngresoTexto = new javax.swing.JPanel();
         lblIngreso = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
+        txtTextoBuscar = new javax.swing.JTextField();
         pnlRangoValores = new javax.swing.JPanel();
         lblValores = new javax.swing.JLabel();
-        txtAnioIni1 = new javax.swing.JTextField();
+        txtValIni = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtAnioFin1 = new javax.swing.JTextField();
+        txtValFin = new javax.swing.JTextField();
         lblMoneda = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -106,7 +112,7 @@ public class Buscador extends javax.swing.JFrame {
 
         lblIngreso.setText("Título del Libro:");
 
-        txtTitulo.setToolTipText("Ingrese el titulo del libro");
+        txtTextoBuscar.setToolTipText("Ingrese el titulo del libro");
 
         javax.swing.GroupLayout pnlIngresoTextoLayout = new javax.swing.GroupLayout(pnlIngresoTexto);
         pnlIngresoTexto.setLayout(pnlIngresoTextoLayout);
@@ -116,7 +122,7 @@ public class Buscador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblIngreso)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+                .addComponent(txtTextoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlIngresoTextoLayout.setVerticalGroup(
@@ -125,18 +131,28 @@ public class Buscador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlIngresoTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIngreso)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTextoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lblValores.setText("Precio entre:");
 
-        txtAnioIni1.setToolTipText("Ingrese el titulo del libro");
+        txtValIni.setToolTipText("Ingrese el titulo del libro");
+        txtValIni.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtValIniFocusLost(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("y");
 
-        txtAnioFin1.setToolTipText("Ingrese el titulo del libro");
+        txtValFin.setToolTipText("Ingrese el titulo del libro");
+        txtValFin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtValFinFocusLost(evt);
+            }
+        });
 
         lblMoneda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMoneda.setText("dólares");
@@ -149,11 +165,11 @@ public class Buscador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblValores)
                 .addGap(18, 18, 18)
-                .addComponent(txtAnioIni1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtValIni, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtAnioFin1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtValFin, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblMoneda)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -164,9 +180,9 @@ public class Buscador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlRangoValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblValores)
-                    .addComponent(txtAnioIni1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(txtAnioFin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMoneda))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -244,12 +260,36 @@ public class Buscador extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxBuscarPorActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        int op = cbxBuscarPor.getSelectedIndex();
+        buscarLibrosPor(op);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtValFinFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValFinFocusLost
+        int ini = Integer.parseInt(txtValIni.getText());
+        try {
+            int fin = Integer.parseInt(txtValFin.getText());
+            if (ini > fin) {
+                JOptionPane.showMessageDialog(this, "Número inicial debe ser mayor al final...", "Error...", 0);
+                txtValFin.setText("");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten números...", "Error...", 0);
+            txtValFin.setText("");
+        }
+    }//GEN-LAST:event_txtValFinFocusLost
+
+    private void txtValIniFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValIniFocusLost
+        try {
+            Integer.parseInt(txtValIni.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten números...", "Error...", 0);
+            txtValIni.setText("");
+        }
+    }//GEN-LAST:event_txtValIniFocusLost
     /**
      * @param args the command line arguments
      */
@@ -275,13 +315,12 @@ public class Buscador extends javax.swing.JFrame {
     private javax.swing.JLabel lblValores;
     private javax.swing.JPanel pnlIngresoTexto;
     private javax.swing.JPanel pnlRangoValores;
-    private javax.swing.JTextField txtAnioFin1;
-    private javax.swing.JTextField txtAnioIni1;
-    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtTextoBuscar;
+    private javax.swing.JTextField txtValFin;
+    private javax.swing.JTextField txtValIni;
     // End of variables declaration//GEN-END:variables
 
     private void mostraParamentrosIngresar(int op) {
-
         switch (op) {
             case 0: //Titulo
                 pnlIngresoTexto.setVisible(true);
@@ -320,5 +359,44 @@ public class Buscador extends javax.swing.JFrame {
                 pnlRangoValores.setVisible(false);
                 lblIngreso.setText("Título del Libro:");
         }
+    }
+
+    private void buscarLibrosPor(int op) {
+        txtIngresado = txtTextoBuscar.getText();
+        ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
+        switch (op) {
+            case 0: //Titulo
+                librosEncontrados = bd.obtenerLibrosPorTitulo(txtIngresado, bd);
+                break;
+            case 1: //Categoría del Libro:
+                librosEncontrados = bd.obtenerLibrosPorCategoria(txtIngresado, bd);
+                break;
+            case 2://Años
+                txtValorInicial = txtValIni.getText();
+                txtValorFinal = txtValFin.getText();
+                librosEncontrados = bd.obtenerLibrosPorAnios(txtValorInicial, txtValorFinal, bd);
+                break;
+            case 3://Palabras Clave:
+                librosEncontrados = bd.obtenerLibrosPorPalabraClave(txtIngresado, bd);
+                break;
+            case 4: // Precio
+                txtValorInicial = txtValIni.getText();
+                txtValorFinal = txtValFin.getText();
+                librosEncontrados = bd.obtenerLibrosPorPrecio(txtValorInicial, txtValorFinal, bd);
+                break;
+            case 5: // Autor
+                librosEncontrados = bd.obtenerLibrosPorAutor(txtIngresado, bd);
+                break;
+        }
+        ResultadosBusqueda resultBusqueda = new ResultadosBusqueda(librosEncontrados, bd);
+        resultBusqueda.setVisible(true);
+        resultBusqueda.setLocationRelativeTo(this);
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        txtTextoBuscar.setText("");
+        txtValIni.setText("");
+        txtValFin.setText("");
     }
 }
