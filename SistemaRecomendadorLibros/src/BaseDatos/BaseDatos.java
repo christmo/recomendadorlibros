@@ -207,7 +207,21 @@ public class BaseDatos {
     }
 
     public ResultSet obtenerInformacionLibro(int idLibro) {
-        String sql ="";
-        return null;
+        String sql ="SELECT "
+                + "IDLIBRO,"
+                + "TITULO,"
+                + "PRECIO,"
+                + "RESUMEN,"
+                + "EDITORIAL,"
+                + "BESTSELLER,"
+                + "IDIDIOMA,"
+                + "IDPAIS,"
+                + "VISTAS,"
+                + "ANIOLANZAMIENTO,"
+                + "IDCATEGORIA,"
+                + "IDAUTOR,"
+                + "IMG "
+                + "FROM LIBROS ;";
+        return ejecutarConsultaUnDato(sql);
     }
 }

@@ -8,7 +8,6 @@
  *
  * Created on 04/05/2011, 01:38:15 PM
  */
-
 package principal;
 
 import objetos.Libros;
@@ -29,10 +28,9 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         initComponents();
     }
 
-    public ResultadosBusqueda(ArrayList<Libros> listaLibros){
+    public ResultadosBusqueda(ArrayList<Libros> listaLibros) {
         llenarTablasLibros(listaLibros);
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -111,16 +109,16 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new ResultadosBusqueda().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
@@ -129,14 +127,16 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void llenarTablasLibros(ArrayList<Libros> listaLibros) {
-           dtm = (DefaultTableModel) lstLibros.getModel();
+        dtm = (DefaultTableModel) lstLibros.getModel();
 
-            for (Libros l : listaLibros) {
-                String[] datos = {
-                    //l.ge
-                };
-                dtm.insertRow(0, datos);
-            }
+        for (Libros l : listaLibros) {
+            String[] datos = {
+                l.getTitulo(),
+                l.getAutor().getNombre(),
+                l.getCategoria().getCategoria(),
+                "" + l.getPrecio()
+            };
+            dtm.insertRow(0, datos);
+        }
     }
-
 }

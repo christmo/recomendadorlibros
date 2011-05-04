@@ -6,14 +6,15 @@ package objetos;
 
 import BaseDatos.BaseDatos;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author kradac
  */
 public class Libros {
-    //int idAutor;
-
     private int idLibro;
     private String titulo;
     private double precio;
@@ -26,13 +27,31 @@ public class Libros {
     private Paises pais;
     private Categorias categoria;
     private Autores autor;
+    private String imagen;
 
     public Libros() {
     }
 
     public Libros(int idLibro, BaseDatos bd) {
-        this.idLibro = idLibro;
-        ResultSet rs = bd.obtenerInformacionLibro(idLibro);
+        try {
+            this.idLibro = idLibro;
+            ResultSet rs = bd.obtenerInformacionLibro(idLibro);
+            this.titulo = rs.getString("TITULO");
+            this.precio = rs.getDouble("PRECIO");
+            this.resumen = rs.getString("RESUMEN");
+            this.editorial = rs.getString("EDITORIAL");
+            this.bestseller = rs.getBoolean("BESTSELLER");
+            this.idioma = new Idiomas(rs.getInt("IDIDIOMA"), bd);
+            this.pais = new Paises(rs.getInt("IDPAIS"), bd);
+            this.vistas = rs.getInt("VISTAS");
+            this.anioLanzamiento = rs.getInt("ANIOLANZAMIENTO");
+            this.categoria = new Categorias(rs.getInt("IDCATEGORIA"), bd);
+            this.autor = new Autores(rs.getInt("IDAUTOR"), bd);
+            this.imagen = rs.getString("IMG");
+        } catch (SQLException ex) {
+            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -201,5 +220,19 @@ public class Libros {
      */
     public void setAutor(Autores autor) {
         this.autor = autor;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public String getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
