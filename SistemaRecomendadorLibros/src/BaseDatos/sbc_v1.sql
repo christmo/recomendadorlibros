@@ -28,7 +28,6 @@ DROP TABLE IF EXISTS `autores`;
 CREATE TABLE `autores` (
   `idAutor` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
-  `idPais` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idAutor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -74,11 +73,13 @@ DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `clientes` (
-  `idClientes` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idCliente` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `idIdioma` int(10) unsigned NOT NULL,
   `anio` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`idClientes`)
+  `user` varchar(100) NOT NULL,
+  `pass` varchar(100) NOT NULL,
+  PRIMARY KEY (`idCliente`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,8 +130,12 @@ CREATE TABLE `libros` (
   `resumen` varchar(500) NOT NULL,
   `editorial` varchar(100) NOT NULL,
   `bestseller` tinyint(1) NOT NULL,
-  `idIdima` int(10) unsigned NOT NULL,
+  `idIdioma` int(10) unsigned NOT NULL,
   `idPais` int(10) unsigned NOT NULL,
+  `vistas` int(10) unsigned NOT NULL,
+  `anioLanzamiento` int(10) unsigned NOT NULL,
+  `idCategoria` int(10) unsigned NOT NULL,
+  `idAutor` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idLibro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -166,6 +171,32 @@ LOCK TABLES `paises` WRITE;
 /*!40000 ALTER TABLE `paises` DISABLE KEYS */;
 /*!40000 ALTER TABLE `paises` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `ventas`
+--
+
+DROP TABLE IF EXISTS `ventas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ventas` (
+  `idVentas` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idCliente` int(10) unsigned NOT NULL,
+  `idLibro` int(10) unsigned NOT NULL,
+  `precio` double NOT NULL,
+  `fecha` datetime NOT NULL,
+  PRIMARY KEY (`idVentas`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ventas`
+--
+
+LOCK TABLES `ventas` WRITE;
+/*!40000 ALTER TABLE `ventas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ventas` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -176,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-03 14:57:05
+-- Dump completed on 2011-05-04 11:52:04
