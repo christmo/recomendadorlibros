@@ -185,7 +185,7 @@ public class LoginGUI extends javax.swing.JFrame {
         if (entrar) {
             System.out.println("Iniciar sistema de Recomendador... ;-)");
             try {
-                String sql = "SELECT IDCLIENTE,NOMBRE,USER,PASS "
+                String sql = "SELECT IDCLIENTE,NOMBRE,USER,PASS,IDIDIOMA "
                         + "FROM CLIENTES "
                         + "WHERE USER = '" + strUser + "' AND PASS = '" + strPass + "'";
 
@@ -205,11 +205,14 @@ public class LoginGUI extends javax.swing.JFrame {
                          * [0]User
                          * [1]IDCLIENTE,
                          * [2]NOMBRE,
+                         * [3]ID_IDIOMA
                          */
                         String sesion[] = {
                             strUser,
                             rs.getString("IDCLIENTE"),
-                            rs.getString("NOMBRE")};
+                            rs.getString("NOMBRE"),
+                            rs.getString("IDIDIOMA")
+                        };
 
 
                         /*iNGRESAR*/

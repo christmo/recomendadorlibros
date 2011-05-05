@@ -392,4 +392,31 @@ public class BaseDatos {
         String sql = "UPDATE LIBROS SET VISTAS = " + i + " WHERE IDLIBRO=" + idLibro;
         ejecutarSentencia(sql);
     }
+
+    /**
+     * Obtiene las dos categorias preferidas por ese cliente
+     * @param idCliente
+     * @return int[]
+     */
+    public int[] obtener2CategoriasPreferidasCliente(int idCliente) {
+        String sql = "SELECT IDCATEGORIA, COUNT(*) AS SUMA "
+                + "FROM VENTAS V, LIBROS L "
+                + "WHERE V.IDLIBRO = L.IDLIBRO "
+                + "AND IDCLIENTE = "+idCliente
+                + " GROUP BY IDCATEGORIA "
+                + "ORDER BY SUMA DESC LIMIT 2;";
+        ResultSet rsC = ejecutarConsulta(sql);
+        int [] categ = null;
+        try {
+            int i=0;
+            while (rsC.next()) {
+                categ[i]=rsC.getInt("IDCATEGORIA");
+                i++;
+            }
+            return categ;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return categ;
+    }
 }
