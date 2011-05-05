@@ -93,14 +93,12 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(266, 266, 266)
+                        .addGap(256, 256, 256)
                         .addComponent(btnRegresar)))
                 .addContainerGap())
         );
@@ -134,9 +132,13 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
 
             try {
                 if (info == null) {
-                    info = new Info_Libro(listaLibros.get(opSelect), bd);
-                    info.setVisible(true);
-                    info.setLocationRelativeTo(this);
+                    //El constructor cambió para
+                    //colocar también los libros
+                    //que van a ir como sugerencias.
+                    
+                    //info = new Info_Libro(listaLibros.get(opSelect), bd);
+                    //info.setVisible(true);
+                    //info.setLocationRelativeTo(this);
                 } else {
                     info.setLibroSeleccionado(listaLibros.get(opSelect));
                     info.setVisible(true);
