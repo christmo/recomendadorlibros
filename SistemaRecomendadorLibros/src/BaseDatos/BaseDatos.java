@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.Libros;
+import principal.Buscador;
 
 /**
  *
@@ -418,5 +419,28 @@ public class BaseDatos {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return categ;
+    }
+    /**
+     * Verifica si el cliente es frecuente
+     * (tiene historial de compra) o no.
+     * @param idCliente
+     * @return true de frecuente o false en caso de ser nuevo.
+     */
+    public boolean tieneHistorialCompra(int idCliente){
+        String sql = "SELECT COUNT(IDLIBRO) AS CANT FROM VENTAS WHERE IDCLIENTE = "+Buscador.sesion[1]+";";
+        ResultSet rsC = ejecutarConsulta(sql);
+        try {
+
+            while (rsC.next()) {
+                if (rsC.getInt("CANT")>0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

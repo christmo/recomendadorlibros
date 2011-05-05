@@ -11,6 +11,7 @@
 package principal;
 
 import BaseDatos.BaseDatos;
+import algoritmos.Caso1;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -35,6 +36,10 @@ public class Buscador extends javax.swing.JFrame {
     private String txtValorInicial = "";
     private String txtValorFinal = "";
 
+    private int idLibro1;
+    private int idLibro2;
+    private int idLibro3;
+
     /** Creates new form Buscador */
     public Buscador() {
         initComponents();
@@ -45,6 +50,34 @@ public class Buscador extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("/iconos/idea.png")).getImage());
         this.bd = bd;
         Buscador.sesion = sesion;
+
+        //Comprobar que el cliente es nuevo o no
+        //Si es nuevo aplicar el caso1.
+        if (!bd.tieneHistorialCompra(Integer.parseInt(sesion[1]))) {
+            //aplicar recomendación caso1
+            System.out.println("CASO 1 : " + sesion[1]);
+            Caso1 auxCaso1 = new Caso1();
+            String[] librosRecomendados = auxCaso1.recomendacion3Libros(bd);
+
+            //ID libros
+            idLibro1 = Integer.parseInt(librosRecomendados[0]);
+            idLibro2 = Integer.parseInt(librosRecomendados[2]);
+            idLibro3 = Integer.parseInt(librosRecomendados[4]);
+
+
+            //Imagenes
+            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[1])));
+            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[3])));
+            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[5])));
+
+
+
+        } else {
+            //aplicar recomendación caso 2
+            System.out.println("CASO 2");
+        }
+
+
         pnlIngresoTexto.setVisible(false);
         pnlRangoValores.setVisible(false);
         this.setTitle("Rocomendador de Libros - Bienvenid@ " + sesion[2]);
@@ -70,6 +103,9 @@ public class Buscador extends javax.swing.JFrame {
         lblMoneda = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        lblLibro2B = new javax.swing.JLabel();
+        lblLibro1B = new javax.swing.JLabel();
+        lblLibro3B = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Busqueda de Libros");
@@ -219,6 +255,15 @@ public class Buscador extends javax.swing.JFrame {
             }
         });
 
+        lblLibro2B.setBackground(new java.awt.Color(255, 255, 255));
+        lblLibro2B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblLibro1B.setBackground(new java.awt.Color(255, 255, 255));
+        lblLibro1B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblLibro3B.setBackground(new java.awt.Color(255, 255, 255));
+        lblLibro3B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -226,30 +271,45 @@ public class Buscador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                                    .addGap(269, 269, 269))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(pnlIngresoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(10, 10, 10))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(pnlRangoValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(477, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(pnlIngresoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlRangoValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(477, Short.MAX_VALUE))))
+                        .addComponent(lblLibro1B, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLibro2B, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLibro3B, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(240, 240, 240)
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblLibro3B, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(lblLibro1B, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(lblLibro2B, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -335,6 +395,9 @@ public class Buscador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblIngreso;
+    private javax.swing.JLabel lblLibro1B;
+    private javax.swing.JLabel lblLibro2B;
+    private javax.swing.JLabel lblLibro3B;
     private javax.swing.JLabel lblMoneda;
     private javax.swing.JLabel lblValores;
     private javax.swing.JPanel pnlIngresoTexto;
