@@ -129,11 +129,12 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
 
         if (intClicks == 1 && intBoton == 1) {
             int opSelect = listaLibros.size() - lstLibros.getSelectedRow() - 1;
-            System.out.println("" + listaLibros.get(opSelect).getTitulo());
+
             try {
                 if (info == null) {
                     info = new Info_Libro(listaLibros.get(opSelect), bd);
                     info.setVisible(true);
+                    info.setLocationRelativeTo(this);
                 } else {
                     info.setLibroSeleccionado(listaLibros.get(opSelect));
                     info.setVisible(true);
@@ -144,17 +145,17 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lstLibrosMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new ResultadosBusqueda().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//
+//            public void run() {
+//                new ResultadosBusqueda().setVisible(true);
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
@@ -181,10 +182,6 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
      * Limpia las filas de la tabla
      */
     private void limpiarTablaBusqueda() {
-//        try {
-//            listaLibros.clear();
-//        } catch (NullPointerException ex) {
-//        }
         dtm = (DefaultTableModel) lstLibros.getModel();
         int n_filas = lstLibros.getRowCount();
         for (int i = 0; i < n_filas; i++) {
