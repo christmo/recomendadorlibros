@@ -234,10 +234,11 @@ public class LoginGUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Comprobar si el usuario y la clave son correctos...", "Error", 0);
                 jpPass.setFocusCycleRoot(true);
-            } catch (NullPointerException npe) {
-                JOptionPane.showMessageDialog(this, "No hay acceso a la base de datos, comprobar si la clave de la base de datos es corercta en el archivo de configuración...", "Error", 0);
-                System.exit(0);
             }
+//            catch (NullPointerException npe) {
+//                JOptionPane.showMessageDialog(this, "No hay acceso a la base de datos, comprobar si la clave de la base de datos es corercta en el archivo de configuración...", "Error", 0);
+//                System.exit(0);
+//            }
         }
     }
 

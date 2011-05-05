@@ -507,4 +507,20 @@ public class Buscador extends javax.swing.JFrame {
     private int[] obtener2CategoriasPreferidasCliente(int idCliente) {
         return bd.obtener2CategoriasPreferidasCliente(idCliente);
     }
+
+    /**
+     * Obtiene el rango de precios minimo y maximo que un cliente podria preferir
+     * pagar
+     * [0] Precio minimo
+     * [1] Precio maximo
+     * @param idCliente
+     * @return double[]
+     */
+    private double[] obtenerRangoPreciosMinMaxCliente(int idCliente) {
+        return bd.obtenerRangoPreciosMinMaxCliente(idCliente);
+    }
+
+//    private int[] obtenerLibrosMasVendidosPorCategorias(int[] categorias){
+//
+//    }
 }

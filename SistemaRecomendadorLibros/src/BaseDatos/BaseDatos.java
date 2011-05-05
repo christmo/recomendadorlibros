@@ -403,15 +403,15 @@ public class BaseDatos {
         String sql = "SELECT IDCATEGORIA, COUNT(*) AS SUMA "
                 + "FROM VENTAS V, LIBROS L "
                 + "WHERE V.IDLIBRO = L.IDLIBRO "
-                + "AND IDCLIENTE = "+idCliente
+                + "AND IDCLIENTE = " + idCliente
                 + " GROUP BY IDCATEGORIA "
-                + "ORDER BY SUMA DESC LIMIT 2;";
+                + "ORDER BY SUMA DESC LIMIT 2";
         ResultSet rsC = ejecutarConsulta(sql);
-        int [] categ = null;
+        int[] categ = new int[2];
         try {
-            int i=0;
+            int i = 0;
             while (rsC.next()) {
-                categ[i]=rsC.getInt("IDCATEGORIA");
+                categ[i] = rsC.getInt("IDCATEGORIA");
                 i++;
             }
             return categ;
@@ -420,19 +420,20 @@ public class BaseDatos {
         }
         return categ;
     }
+
     /**
      * Verifica si el cliente es frecuente
      * (tiene historial de compra) o no.
      * @param idCliente
      * @return true de frecuente o false en caso de ser nuevo.
      */
-    public boolean tieneHistorialCompra(int idCliente){
-        String sql = "SELECT COUNT(IDLIBRO) AS CANT FROM VENTAS WHERE IDCLIENTE = "+Buscador.sesion[1]+";";
+    public boolean tieneHistorialCompra(int idCliente) {
+        String sql = "SELECT COUNT(IDLIBRO) AS CANT FROM VENTAS WHERE IDCLIENTE = " + Buscador.sesion[1] + ";";
         ResultSet rsC = ejecutarConsulta(sql);
         try {
 
             while (rsC.next()) {
-                if (rsC.getInt("CANT")>0) {
+                if (rsC.getInt("CANT") > 0) {
                     return true;
                 } else {
                     return false;
@@ -443,4 +444,36 @@ public class BaseDatos {
         }
         return false;
     }
+
+    /**
+     * Retorna el precio minimo y el precio maximo segun la desviasion estandar
+     * que el cliente podria pagar por un libro
+     * [0] precio minimo
+     * [1] precio maximo
+     * @param idCliente
+     * @return double[]
+     */
+    public double[] obtenerRangoPreciosMinMaxCliente(int idCliente) {
+        String sql = "SELECT AVG(PRECIO)-STD(PRECIO) AS PMIN,STD(PRECIO)+AVG(PRECIO) AS PMAX "
+                + "FROM VENTAS "
+                + "WHERE IDCLIENTE = " + idCliente;
+        ResultSet rsC = ejecutarConsultaUnDato(sql);
+        double[] rango = new double[2];
+        try {
+            rango[0] = rsC.getDouble("PMIN");
+            rango[1] = rsC.getDouble("PMIN");
+            return rango;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rango;
+    }
+
+    //libros mas vendidos aun esta por completar
+//    SELECT L.IDLIBRO, COUNT(*)
+//FROM LIBROS L, VENTAS V
+//WHERE L.IDLIBRO = V.IDLIBRO
+//AND IDCATEGORIA = 1
+//GROUP BY L.IDLIBRO;
+
 }
