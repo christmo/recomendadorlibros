@@ -30,7 +30,7 @@ public class Buscador extends javax.swing.JFrame {
      * [2]NOMBRE,
      * [3]ID_IDIOMA
      */
-    private String[] sesion;
+    public static String[] sesion;
     private String txtIngresado = "";
     private String txtValorInicial = "";
     private String txtValorFinal = "";
@@ -44,7 +44,7 @@ public class Buscador extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/iconos/idea.png")).getImage());
         this.bd = bd;
-        this.sesion = sesion;
+        Buscador.sesion = sesion;
         pnlIngresoTexto.setVisible(false);
         pnlRangoValores.setVisible(false);
         this.setTitle("Rocomendador de Libros - Bienvenid@ " + sesion[2]);
