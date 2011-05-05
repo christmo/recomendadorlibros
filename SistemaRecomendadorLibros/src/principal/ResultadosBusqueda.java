@@ -130,6 +130,8 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         if (intClicks == 1 && intBoton == 1) {
             int opSelect = listaLibros.size() - lstLibros.getSelectedRow() - 1;
 
+            actualizarVistasLibro(listaLibros.get(opSelect));
+
             try {
                 if (info == null) {
                     info = new Info_Libro(listaLibros.get(opSelect), bd);
@@ -187,5 +189,14 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         for (int i = 0; i < n_filas; i++) {
             dtm.removeRow(0);
         }
+    }
+
+    /**
+     * Incrementa en uno el numero de vistas que tiene ese libro y actualiza la 
+     * base de datos
+     * @param libroSeleccionado
+     */
+    private void actualizarVistasLibro(Libros libroSeleccionado) {
+        bd.actualizarVistasLibro(libroSeleccionado.getVistas()+1,libroSeleccionado.getIdLibro());
     }
 }

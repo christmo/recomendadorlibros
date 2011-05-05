@@ -382,4 +382,14 @@ public class BaseDatos {
         }
         return null;
     }
+
+    /**
+     * Actualiza el numero de Vistas de un libro
+     * @param i numero de vistas
+     * @param idLibro
+     */
+    public void actualizarVistasLibro(int i, int idLibro) {
+        String sql = "UPDATE LIBROS SET VISTAS = " + i + " WHERE IDLIBRO=" + idLibro;
+        ejecutarSentencia(sql);
+    }
 }
