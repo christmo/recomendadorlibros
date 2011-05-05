@@ -425,7 +425,7 @@ public class Info_Libro extends javax.swing.JFrame {
      */
     public void setLblLibro1(int idLibro, String dirImg) {
         this.idLibro1 = idLibro;
-        lblLibro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg)));
+        lblLibro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg+ ".jpg")));
     }
 
     /**
@@ -440,7 +440,7 @@ public class Info_Libro extends javax.swing.JFrame {
      */
     public void setLblLibro2(int idLibro, String dirImg) {
         this.idLibro2 = idLibro;
-        lblLibro2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg)));
+        lblLibro2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg + ".jpg")));
     }
 
     /**
@@ -455,7 +455,7 @@ public class Info_Libro extends javax.swing.JFrame {
      */
     public void setLblLibro3(int idLibro, String dirImg) {
         this.idLibro3 = idLibro;
-        lblLibro3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg)));
+        lblLibro3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + dirImg + ".jpg")));
 
     }
 
