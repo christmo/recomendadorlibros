@@ -142,7 +142,7 @@ public class Caso2 {
         if (Libros.size()
                 != 3) {
             Caso1 caso1 = new Caso1();
-            String[] info = caso1.recomendacion3Libros(bd);
+            String[] info = caso1.recomendacion3Libros(bd,3, false);
             if (Libros.size() == 1) {
                 libros3.add(Integer.parseInt(info[0]));
                 libros3.add(Integer.parseInt(info[2]));

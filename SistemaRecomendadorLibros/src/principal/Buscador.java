@@ -57,7 +57,7 @@ public class Buscador extends javax.swing.JFrame {
             //aplicar recomendación caso1
             System.out.println("CASO 1 : " + sesion[1]);
             Caso1 auxCaso1 = new Caso1();
-            String[] librosRecomendados = auxCaso1.recomendacion3Libros(bd);
+            String[] librosRecomendados = auxCaso1.recomendacion3Libros(bd,3, false);
 
             //ID libros
             idLibro1 = Integer.parseInt(librosRecomendados[0]);

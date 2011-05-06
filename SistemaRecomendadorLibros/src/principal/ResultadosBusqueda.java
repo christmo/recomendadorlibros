@@ -11,6 +11,7 @@
 package principal;
 
 import BaseDatos.BaseDatos;
+import algoritmos.Caso3;
 import objetos.Libros;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -132,13 +133,21 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
 
             try {
                 if (info == null) {
-                    //El constructor cambió para
-                    //colocar también los libros
-                    //que van a ir como sugerencias.
+
+                    //Calcular libros como sugerencias
+                    //Caso 3.
+                    String[] lib = new Caso3().librosCaso3(4, bd);
                     
-                    //info = new Info_Libro(listaLibros.get(opSelect), bd);
-                    //info.setVisible(true);
-                    //info.setLocationRelativeTo(this);
+                    info = new Info_Libro(listaLibros.get(opSelect),
+                            bd,
+                            Integer.parseInt(lib[0]),
+                            lib[1],
+                            Integer.parseInt(lib[2]),
+                            lib[3],
+                            Integer.parseInt(lib[4]),
+                            lib[5]);
+                    info.setVisible(true);
+                    info.setLocationRelativeTo(this);
                 } else {
                     info.setLibroSeleccionado(listaLibros.get(opSelect));
                     info.setVisible(true);

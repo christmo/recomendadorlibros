@@ -38,7 +38,9 @@ public class Info_Libro extends javax.swing.JFrame {
             String dirLibroRecomendado3
             ) {
         initComponents();
+        
         this.informacionLibro = libroSeleccionado;
+
         this.setLblAnio(String.valueOf(this.informacionLibro.getAnioLanzamiento()));
         this.setLblAutor(this.informacionLibro.getAutor().getNombre());
         this.setLblBestSeller(this.informacionLibro.isBestseller());
