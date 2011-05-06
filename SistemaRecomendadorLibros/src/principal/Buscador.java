@@ -36,7 +36,6 @@ public class Buscador extends javax.swing.JFrame {
     private String txtIngresado = "";
     private String txtValorInicial = "";
     private String txtValorFinal = "";
-
     private int idLibro1;
     private int idLibro2;
     private int idLibro3;
@@ -67,21 +66,33 @@ public class Buscador extends javax.swing.JFrame {
 
 
             //Imagenes
-            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[1]+ ".jpg")));
-            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[3]+ ".jpg")));
-            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[5]+ ".jpg")));
+            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[1] + ".jpg")));
+            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[3] + ".jpg")));
+            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[5] + ".jpg")));
 
 
 
         } else {
             //aplicar recomendación caso 2
             System.out.println("CASO 2");
-//            Caso2 caso2 = new Caso2(bd);
-//            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
-//
-//            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen()+ ".jpg")));
-//            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen()+ ".jpg")));
-//            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen()+ ".jpg")));
+            Caso2 caso2 = new Caso2(bd);
+            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
+
+            try {
+                lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen() + ".jpg")));
+            } catch (NullPointerException ex) {
+            } catch (IndexOutOfBoundsException iobe) {
+            }
+            try {
+                lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen() + ".jpg")));
+            } catch (NullPointerException ex) {
+            } catch (IndexOutOfBoundsException iobe) {
+            }
+            try {
+                lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen() + ".jpg")));
+            } catch (NullPointerException ex) {
+            } catch (IndexOutOfBoundsException iobe) {
+            }
 
         }
 
@@ -503,5 +514,4 @@ public class Buscador extends javax.swing.JFrame {
         txtValIni.setText("");
         txtValFin.setText("");
     }
-
 }

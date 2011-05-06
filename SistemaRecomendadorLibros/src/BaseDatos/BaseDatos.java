@@ -397,22 +397,20 @@ public class BaseDatos {
     /**
      * Obtiene las dos categorias preferidas por ese cliente
      * @param idCliente
-     * @return int[]
+     * @return ArrayList<Integer>
      */
-    public int[] obtener2CategoriasPreferidasCliente(String idCliente) {
+    public ArrayList<Integer> obtener2CategoriasPreferidasCliente(String idCliente) {
         String sql = "SELECT IDCATEGORIA, COUNT(*) AS SUMA "
                 + "FROM VENTAS V, LIBROS L "
                 + "WHERE V.IDLIBRO = L.IDLIBRO "
                 + "AND IDCLIENTE = " + idCliente
                 + " GROUP BY IDCATEGORIA "
-                + "ORDER BY SUMA DESC LIMIT 2";
+                + "ORDER BY SUMA DESC,L.BESTSELLER DESC LIMIT 2";
         ResultSet rsC = ejecutarConsulta(sql);
-        int[] categ = new int[2];
+        ArrayList<Integer> categ = new ArrayList<Integer>();
         try {
-            int i = 0;
             while (rsC.next()) {
-                categ[i] = rsC.getInt("IDCATEGORIA");
-                i++;
+                categ.add(rsC.getInt("IDCATEGORIA"));
             }
             return categ;
         } catch (SQLException ex) {
@@ -461,7 +459,7 @@ public class BaseDatos {
         double[] rango = new double[2];
         try {
             rango[0] = rsC.getDouble("PMIN");
-            rango[1] = rsC.getDouble("PMIN");
+            rango[1] = rsC.getDouble("PMAX");
             return rango;
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -470,19 +468,24 @@ public class BaseDatos {
     }
 
     /**
-     * Retorna el id de los dos libros que cumplen con los parametros para esa
-     * categoria
+     * Hace la obtencion de los ids de los libros que pertenecen a una categoria
+     * determinada, en esta tambien se hace el filtrado de cuantos resultados
+     * se quiere obtener y si se desea tomar en cuenta el rango de precios o no
      * @param idCliente
      * @param idCateg
      * @param idIdioma
      * @param rangoPrecio
-     * @return int[]
+     * @param tomarPrecio
+     * @param N_Libros
+     * @return ArrayList<Integer>
      */
-    public int[] obtener2LibrosCategoriaMasPreferida(String idCliente,
+    public ArrayList<Integer> obtenerLibrosCategoriaMasPreferida(String idCliente,
             String idCateg,
             String idIdioma,
-            double[] rangoPrecio) {
-        String sql = "SELECT L.IDLIBRO AS LIBRO, COUNT(*) as SUMA "
+            double[] rangoPrecio,
+            boolean tomarPrecio,
+            int N_Libros) {
+        String strSQLini = "SELECT L.IDLIBRO AS LIBRO, COUNT(*) as SUMA "
                 + "FROM VENTAS V, LIBROS L "
                 + "WHERE V.IDLIBRO = L.IDLIBRO "
                 + "AND V.IDLIBRO IN ( "
@@ -496,17 +499,20 @@ public class BaseDatos {
                 + "    AND IDCLIENTE = " + idCliente
                 + "  ) "
                 + ") "
-                + "AND L.IDIDIOMA = " + idIdioma
-                + " AND L.PRECIO BETWEEN " + rangoPrecio[0] + " AND " + rangoPrecio[1] + " "
-                + "GROUP BY L.IDLIBRO "
-                + "ORDER BY SUMA DESC LIMIT 2";
-        ResultSet rsC = ejecutarConsulta(sql);
-        int[] categ = new int[2];
+                + "AND L.IDIDIOMA = " + idIdioma + " ";
+        if (tomarPrecio) {
+            String strPrecioSQL = "AND L.PRECIO BETWEEN " + rangoPrecio[0] + " AND " + rangoPrecio[1] + " ";
+            strSQLini += strPrecioSQL;
+        }
+        String strSQLfin = "GROUP BY L.IDLIBRO "
+                + "ORDER BY SUMA DESC, L.BESTSELLER DESC LIMIT " + N_Libros;
+        strSQLini += strSQLfin;
+
+        ResultSet rsC = ejecutarConsulta(strSQLini);
+        ArrayList<Integer> categ = new ArrayList<Integer>();
         try {
-            int i = 0;
             while (rsC.next()) {
-                categ[i] = rsC.getInt("LIBRO");
-                i++;
+                categ.add(rsC.getInt("LIBRO"));
             }
             return categ;
         } catch (SQLException ex) {
@@ -516,43 +522,25 @@ public class BaseDatos {
     }
 
     /**
-     * Retorna el id de un libro que cumple con los parametros de la segunda
-     * categoria
+     * Obtiene el id del idioma de los libros que ha comprado el cliente y saca
+     * el que mas se repite en esta lista
      * @param idCliente
-     * @param idCateg
-     * @param idIdioma
-     * @param rangoPrecio
-     * @return int
+     * @return String
      */
-    public int obtener1LibroCategoriaMenosPreferida(String idCliente,
-            String idCateg,
-            String idIdioma,
-            double[] rangoPrecio) {
-        String sql = "SELECT L.IDLIBRO AS LIBRO, COUNT(*) as SUMA "
-                + "FROM VENTAS V, LIBROS L "
-                + "WHERE V.IDLIBRO = L.IDLIBRO "
-                + "AND V.IDLIBRO IN ( "
-                + "  SELECT L.IDLIBRO "
-                + "  FROM LIBROS L "
-                + "  WHERE L.IDCATEGORIA = " + idCateg
-                + "  AND L.IDLIBRO NOT IN ( "
-                + "    SELECT L.IDLIBRO "
-                + "    FROM LIBROS L, VENTAS V "
-                + "    WHERE L.IDLIBRO = V.IDLIBRO "
-                + "    AND IDCLIENTE = " + idCliente
-                + "  ) "
-                + ") "
-                + "AND L.IDIDIOMA = " + idIdioma
-                + " AND L.PRECIO BETWEEN " + rangoPrecio[0] + " AND " + rangoPrecio[1] + " "
-                + " GROUP BY L.IDLIBRO "
+    public String obtnerIdIdiomaPreferenciaCliente(String idCliente) {
+        String sql = "SELECT L.IDIDIOMA AS IDIDIOMA, COUNT(*) AS SUMA "
+                + "FROM LIBROS L, VENTAS V "
+                + "WHERE L.IDLIBRO = V.IDLIBRO "
+                + "AND V.IDCLIENTE = " + idCliente
+                + " GROUP BY L.IDIDIOMA "
                 + "ORDER BY SUMA DESC LIMIT 1";
         ResultSet rsC = ejecutarConsultaUnDato(sql);
-        int categ = -1;
+        String categ = "";
         try {
-            categ = rsC.getInt("LIBRO");
+            categ = rsC.getString("IDIDIOMA");
             return categ;
         } catch (SQLException ex) {
-            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return categ;
     }

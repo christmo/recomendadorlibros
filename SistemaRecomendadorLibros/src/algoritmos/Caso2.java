@@ -16,7 +16,11 @@ import principal.Buscador;
 public class Caso2 {
 
     private BaseDatos bd;
-    private String idIdiomaCliente = Buscador.sesion[3];
+    private String idIdiomaCliente;
+    /**
+     * Almacena los libros a presentar
+     */
+    private ArrayList<Libros> Libros = new ArrayList<Libros>();
 
     /**
      * Caso 2: El cliente tiene al menos una compra.
@@ -47,6 +51,7 @@ public class Caso2 {
      */
     public Caso2(BaseDatos bd) {
         this.bd = bd;
+        idIdiomaCliente = bd.obtnerIdIdiomaPreferenciaCliente(Buscador.sesion[1]);
     }
 
     /**
@@ -54,7 +59,7 @@ public class Caso2 {
      * @param idCliente
      * @return int[] dos categorias más comprada por el ciente
      */
-    private int[] obtener2CategoriasPreferidasCliente(String idCliente) {
+    private ArrayList<Integer> obtener2CategoriasPreferidasCliente(String idCliente) {
         return bd.obtener2CategoriasPreferidasCliente(idCliente);
     }
 
@@ -69,27 +74,99 @@ public class Caso2 {
     private double[] obtenerRangoPreciosMinMaxCliente(String idCliente) {
         return bd.obtenerRangoPreciosMinMaxCliente(idCliente);
     }
-    
 
     public ArrayList<Libros> obtenerLibrosRecomendadosClienteHistorial(String idCliente) {
-        ArrayList<Libros> Libros = new ArrayList<Libros>();
-        int[] catg = obtener2CategoriasPreferidasCliente(idCliente);
+        ArrayList<Integer> libros3 = new ArrayList<Integer>(); // para obtener ids de 3 libros
+        ArrayList<Integer> catg = obtener2CategoriasPreferidasCliente(idCliente);
         double[] precios = obtenerRangoPreciosMinMaxCliente(idCliente);
+        if (catg.size() == 2) {
+            ArrayList<Integer> libros2 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                    "" + catg.get(0),
+                    idIdiomaCliente,
+                    precios,
+                    true,
+                    2);
 
-        int[] libros2 = bd.obtener2LibrosCategoriaMasPreferida(idCliente,
-                "" + catg[0],
-                idIdiomaCliente,
-                precios);
+            if (libros2.size() == 2) {
+                llenarListaLibros(libros2);
+            } else {
+                libros2 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                        "" + catg.get(0),
+                        idIdiomaCliente,
+                        precios,
+                        false, 2);
+                if (!libros2.isEmpty()) {
+                    llenarListaLibros(libros2);
+                }
+            }
 
-        int libros1 = bd.obtener1LibroCategoriaMenosPreferida(idCliente,
-                "" + catg[1],
-                idIdiomaCliente,
-                precios);
-        
-        Libros.add(new Libros(libros2[0], bd));
-        Libros.add(new Libros(libros2[1], bd));
-        Libros.add(new Libros(libros1, bd));
+            ArrayList<Integer> libros1 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                    "" + catg.get(1),
+                    idIdiomaCliente,
+                    precios,
+                    true,
+                    1);
 
+            if (!libros1.isEmpty()) {
+                llenarListaLibros(libros1);
+            } else {
+                libros1 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                        "" + catg.get(1),
+                        idIdiomaCliente,
+                        precios,
+                        false,
+                        1);
+                if (!libros1.isEmpty()) {
+                    llenarListaLibros(libros1);
+                }
+            }
+        } else if (catg.size() == 1) {
+            libros3 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                    "" + catg.get(0),
+                    idIdiomaCliente,
+                    precios,
+                    true, 3);
+            if (libros3.size() == 3) {
+                llenarListaLibros(libros3);
+            } else {
+                libros3 = bd.obtenerLibrosCategoriaMasPreferida(idCliente,
+                        "" + catg.get(0),
+                        idIdiomaCliente,
+                        precios,
+                        false, 3);
+                if (!libros3.isEmpty()) {
+                    llenarListaLibros(libros3);
+                }
+            }
+        }
+        if (Libros.size()
+                != 3) {
+            Caso1 caso1 = new Caso1();
+            String[] info = caso1.recomendacion3Libros(bd);
+            if (Libros.size() == 1) {
+                libros3.add(Integer.parseInt(info[0]));
+                libros3.add(Integer.parseInt(info[2]));
+            } else if (Libros.size() == 2) {
+                libros3.add(Integer.parseInt(info[0]));
+            } else if (Libros.isEmpty()) {
+                libros3.add(Integer.parseInt(info[0]));
+                libros3.add(Integer.parseInt(info[2]));
+                libros3.add(Integer.parseInt(info[4]));
+            }
+            llenarListaLibros(libros3);
+        }
         return Libros;
+    }
+
+    /**
+     * Llena el arreglo con la informacion de los libros
+     * @param libros
+     * @return ArrayList<Libros>
+     */
+    private void llenarListaLibros(ArrayList<Integer> libros) {
+        for (int idLibro : libros) {
+            Libros.add(new Libros(idLibro, bd));
+
+        }
     }
 }
