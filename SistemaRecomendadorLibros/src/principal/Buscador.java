@@ -79,16 +79,19 @@ public class Buscador extends javax.swing.JFrame {
             ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
 
             try {
+                idLibro1 = librosRecomendados.get(0).getIdLibro();
                 lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen() + ".jpg")));
             } catch (NullPointerException ex) {
             } catch (IndexOutOfBoundsException iobe) {
             }
             try {
+                idLibro2 = librosRecomendados.get(1).getIdLibro();
                 lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen() + ".jpg")));
             } catch (NullPointerException ex) {
             } catch (IndexOutOfBoundsException iobe) {
             }
             try {
+                idLibro3 = librosRecomendados.get(2).getIdLibro();
                 lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen() + ".jpg")));
             } catch (NullPointerException ex) {
             } catch (IndexOutOfBoundsException iobe) {
