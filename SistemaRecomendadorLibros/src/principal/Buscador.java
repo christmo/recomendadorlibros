@@ -76,12 +76,12 @@ public class Buscador extends javax.swing.JFrame {
         } else {
             //aplicar recomendación caso 2
             System.out.println("CASO 2");
-            Caso2 caso2 = new Caso2(bd);
-            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
-
-            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen()+ ".jpg")));
-            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen()+ ".jpg")));
-            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen()+ ".jpg")));
+//            Caso2 caso2 = new Caso2(bd);
+//            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
+//
+//            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen()+ ".jpg")));
+//            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen()+ ".jpg")));
+//            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen()+ ".jpg")));
 
         }
 
