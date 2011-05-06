@@ -12,6 +12,7 @@ package principal;
 
 import BaseDatos.BaseDatos;
 import algoritmos.Caso1;
+import algoritmos.Caso2;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -75,6 +76,13 @@ public class Buscador extends javax.swing.JFrame {
         } else {
             //aplicar recomendación caso 2
             System.out.println("CASO 2");
+            Caso2 caso2 = new Caso2(bd);
+            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
+
+            lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen()+ ".jpg")));
+            lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen()+ ".jpg")));
+            lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen()+ ".jpg")));
+
         }
 
 
@@ -496,31 +504,4 @@ public class Buscador extends javax.swing.JFrame {
         txtValFin.setText("");
     }
 
-    /*
-     * Algoritmo de filtrado
-     */
-    /**
-     * Obtiene las dos categorias que el cliente compra mas libros
-     * @param idCliente
-     * @return
-     */
-    private int[] obtener2CategoriasPreferidasCliente(int idCliente) {
-        return bd.obtener2CategoriasPreferidasCliente(idCliente);
-    }
-
-    /**
-     * Obtiene el rango de precios minimo y maximo que un cliente podria preferir
-     * pagar
-     * [0] Precio minimo
-     * [1] Precio maximo
-     * @param idCliente
-     * @return double[]
-     */
-    private double[] obtenerRangoPreciosMinMaxCliente(int idCliente) {
-        return bd.obtenerRangoPreciosMinMaxCliente(idCliente);
-    }
-
-//    private int[] obtenerLibrosMasVendidosPorCategorias(int[] categorias){
-//
-//    }
 }
