@@ -13,6 +13,7 @@ package principal;
 import BaseDatos.BaseDatos;
 import algoritmos.Caso1;
 import algoritmos.Caso2;
+import algoritmos.Caso3;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -278,6 +279,11 @@ public class Buscador extends javax.swing.JFrame {
 
         lblLibro2B.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro2B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblLibro2B.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLibro2BMouseClicked(evt);
+            }
+        });
 
         lblLibro1B.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro1B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -289,6 +295,11 @@ public class Buscador extends javax.swing.JFrame {
 
         lblLibro3B.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro3B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblLibro3B.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLibro3BMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -411,14 +422,19 @@ public class Buscador extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_txtValFinKeyPressed
-
+    
     private void lblLibro1BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro1BMouseClicked
-        //Calcular 3 libros según categoría
-        //Presentar info de libro y las 3 recomendaciones
-
-        //Recomendaciones
-        
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro1,bd);
     }//GEN-LAST:event_lblLibro1BMouseClicked
+
+    private void lblLibro2BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro2BMouseClicked
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro2,bd);
+    }//GEN-LAST:event_lblLibro2BMouseClicked
+
+    private void lblLibro3BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro3BMouseClicked
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro3,bd);
+    }//GEN-LAST:event_lblLibro3BMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;

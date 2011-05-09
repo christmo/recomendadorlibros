@@ -6,6 +6,7 @@
 package principal;
 
 import BaseDatos.BaseDatos;
+import algoritmos.Caso3;
 import javax.swing.JOptionPane;
 import objetos.Libros;
 
@@ -19,13 +20,14 @@ public class Info_Libro extends javax.swing.JFrame {
     private int idLibro2;
     private int idLibro3;
     private Libros informacionLibro;
+    private BaseDatos bd;
 
     /** Creates new form Info_Libro */
     public Info_Libro() {
         initComponents();
     }
 
-    Info_Libro(
+    public Info_Libro(
             Libros libroSeleccionado,
             BaseDatos bd,
             int idLibroRecomendado1,
@@ -36,7 +38,8 @@ public class Info_Libro extends javax.swing.JFrame {
             String dirLibroRecomendado3
             ) {
         initComponents();
-        
+
+        this.bd = bd;
         this.informacionLibro = libroSeleccionado;
 
         cargarDatos();
@@ -121,6 +124,11 @@ public class Info_Libro extends javax.swing.JFrame {
 
         lblLibro3.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblLibro3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLibro3MouseClicked(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Info_Book"));
 
@@ -266,6 +274,11 @@ public class Info_Libro extends javax.swing.JFrame {
 
         lblLibro2.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblLibro2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLibro2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,9 +305,8 @@ public class Info_Libro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLibro1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblLibro2, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(lblLibro3, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
+                    .addComponent(lblLibro3, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(lblLibro2, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -315,11 +327,16 @@ public class Info_Libro extends javax.swing.JFrame {
 }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void lblLibro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro1MouseClicked
-        JOptionPane.showMessageDialog(this, this.getLblLibro1(), String.valueOf(this.getLblLibro2()), 1);
-        //cerrar esta ventana y generar otra igual pero
-        //con los datos del libro seleccionado.
-
+       new Caso3().presentarRecomendacionesInfoLibro(idLibro1, bd);
     }//GEN-LAST:event_lblLibro1MouseClicked
+
+    private void lblLibro2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro2MouseClicked
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro2, bd);
+    }//GEN-LAST:event_lblLibro2MouseClicked
+
+    private void lblLibro3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro3MouseClicked
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro3, bd);
+    }//GEN-LAST:event_lblLibro3MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;

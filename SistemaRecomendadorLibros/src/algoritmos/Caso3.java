@@ -22,7 +22,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objetos.Libros;
 import principal.Buscador;
+import principal.Info_Libro;
+import principal.ResultadosBusqueda;
 
 /**
  *
@@ -30,10 +33,14 @@ import principal.Buscador;
  */
 public class Caso3 {
 
-    public String[] librosCaso3(int idCategoria, BaseDatos bd) {
+    public String[] librosCaso3(int idCategoria, BaseDatos bd, int idLibroActual) {
         try {
             String[] dataLibros = new String[6];
-            String sql = " SELECT IDLIBRO, IMG FROM LIBROS WHERE IDCATEGORIA = " + idCategoria + " AND IDLIBRO NOT IN ( " + " SELECT IDLIBRO FROM VENTAS WHERE IDCLIENTE = " + Buscador.sesion[1] + ") LIMIT 3;";
+            String sql = " SELECT IDLIBRO, IMG FROM LIBROS WHERE IDCATEGORIA = "
+                    + idCategoria + " AND IDLIBRO != "
+                    + idLibroActual + " AND IDLIBRO NOT IN ( "
+                    + " SELECT IDLIBRO FROM VENTAS WHERE IDCLIENTE = "
+                    + Buscador.sesion[1] + ") LIMIT 3;";
             ResultSet rs = bd.ejecutarConsulta(sql);
             int indice = 0;
             while (rs.next()) {
@@ -61,7 +68,7 @@ public class Caso3 {
                 }
                 String[] librosFaltantes = case1.recomendacion3Libros(bd, libF, true);
                 for (int i = 0; i < libF; i++) {
-                    dataLibros[indice] = librosFaltantes[i*2];
+                    dataLibros[indice] = librosFaltantes[i * 2];
                     indice++;
                     dataLibros[indice] = librosFaltantes[(i * 2) + 1];
                     indice++;
@@ -75,4 +82,43 @@ public class Caso3 {
         return null;
     }
 
+    /**
+     * Presenta la información y
+     * recomendaciones al hacer clic
+     * sobre la imagen del libro
+     *
+     * @param idLibro
+     */
+    public void presentarRecomendacionesInfoLibro(int idLibro, BaseDatos bd) {
+        //Calcular libros como sugerencias
+        //Caso 3.
+        Libros newBook = new Libros(idLibro, bd);
+        String[] lib = new Caso3().librosCaso3(
+                newBook.getCategoria().getIdCategoria(),
+                bd,
+                idLibro);
+        if (ResultadosBusqueda.info == null) {
+            ResultadosBusqueda.info = new Info_Libro(newBook,
+                    bd,
+                    Integer.parseInt(lib[0]),
+                    lib[1],
+                    Integer.parseInt(lib[2]),
+                    lib[3],
+                    Integer.parseInt(lib[4]),
+                    lib[5]);
+            ResultadosBusqueda.info.setVisible(true);
+            ResultadosBusqueda.info.setLocationRelativeTo(null);
+        } else {
+            ResultadosBusqueda.info.setLibroSeleccionado(newBook,
+                    Integer.parseInt(lib[0]),
+                    lib[1],
+                    Integer.parseInt(lib[2]),
+                    lib[3],
+                    Integer.parseInt(lib[4]),
+                    lib[5]);
+            ResultadosBusqueda.info.setVisible(true);
+            ResultadosBusqueda.info.setLocationRelativeTo(null);
+        }
+
+    }
 }

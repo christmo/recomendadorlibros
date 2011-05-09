@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class ResultadosBusqueda extends javax.swing.JFrame {
 
     private DefaultTableModel dtm;
-    private Info_Libro info = null;
+    public static Info_Libro info = null;
     private BaseDatos bd;
     private ArrayList<Libros> listaLibros;
 
@@ -135,8 +135,11 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
             try {
                 //Calcular libros como sugerencias
                     //Caso 3.
-                    String[] lib = new Caso3().librosCaso3(listaLibros.get(opSelect).getCategoria().getIdCategoria()
-                            , bd);
+                    String[] lib = new Caso3()
+                            .librosCaso3(listaLibros.get(opSelect)
+                            .getCategoria().getIdCategoria()
+                            , bd,
+                            listaLibros.get(opSelect).getIdLibro());
                 if (info == null) {                    
                     info = new Info_Libro(listaLibros.get(opSelect),
                             bd,

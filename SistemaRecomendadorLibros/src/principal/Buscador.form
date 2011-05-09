@@ -321,6 +321,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblLibro2BMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLibro1B">
       <Properties>
@@ -348,6 +351,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblLibro3BMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
