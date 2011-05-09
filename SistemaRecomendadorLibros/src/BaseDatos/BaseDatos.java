@@ -79,7 +79,7 @@ public class BaseDatos {
             r = stat.executeQuery(sql);
             System.out.println("SQL:" + sql);
         } catch (SQLException ex) {
-            System.out.println("No se pudo completar la consulta...");
+            System.out.println("No se pudo completar la consulta...\n" + ex.getMessage());
         } catch (NullPointerException ex) {
         }
         return r;
@@ -264,10 +264,12 @@ public class BaseDatos {
      */
     public ArrayList<Libros> obtenerLibrosPorCategoria(String txtIngresado, BaseDatos bd) {
         ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
-        String sql = "SELECT "
-                + "IDLIBRO "
+        String sql = "SELECT IDLIBRO "
                 + "FROM LIBROS "
-                + "WHERE CATEGORIA like '%" + txtIngresado + "%'";
+                + "WHERE IDCATEGORIA IN ("
+                + "SELECT IDCATEGORIA "
+                + "FROM CATEGORIAS "
+                + "WHERE NOMBRE LIKE '%"+ txtIngresado +"%')";
         ResultSet rsLibros = ejecutarConsulta(sql);
         try {
             while (rsLibros.next()) {
@@ -277,6 +279,8 @@ public class BaseDatos {
             return librosEncontrados;
         } catch (SQLException ex) {
             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+            return null;
         }
         return null;
     }

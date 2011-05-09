@@ -15,6 +15,7 @@ import algoritmos.Caso3;
 import objetos.Libros;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -137,7 +138,7 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
                     //Calcular libros como sugerencias
                     //Caso 3.
                     String[] lib = new Caso3().librosCaso3(4, bd);
-                    
+
                     info = new Info_Libro(listaLibros.get(opSelect),
                             bd,
                             Integer.parseInt(lib[0]),
@@ -157,7 +158,6 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_lstLibrosMousePressed
-
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -179,15 +179,19 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
     private void llenarTablasLibros(ArrayList<Libros> listaLibros) {
         limpiarTablaBusqueda();
         dtm = (DefaultTableModel) lstLibros.getModel();
-
-        for (Libros l : listaLibros) {
-            String[] datos = {
-                l.getTitulo(),
-                l.getAutor().getNombre(),
-                l.getCategoria().getCategoria(),
-                "" + l.getPrecio()
-            };
-            dtm.insertRow(0, datos);
+        try {
+            for (Libros l : listaLibros) {
+                String[] datos = {
+                    l.getTitulo(),
+                    l.getAutor().getNombre(),
+                    l.getCategoria().getCategoria(),
+                    "" + l.getPrecio()
+                };
+                dtm.insertRow(0, datos);
+            }
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(this, "No hay resultados para esa categoria...", "Información...", 1);
+            this.dispose();
         }
     }
 
@@ -208,6 +212,6 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
      * @param libroSeleccionado
      */
     private void actualizarVistasLibro(Libros libroSeleccionado) {
-        bd.actualizarVistasLibro(libroSeleccionado.getVistas()+1,libroSeleccionado.getIdLibro());
+        bd.actualizarVistasLibro(libroSeleccionado.getVistas() + 1, libroSeleccionado.getIdLibro());
     }
 }

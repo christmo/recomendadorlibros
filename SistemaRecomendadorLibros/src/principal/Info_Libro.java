@@ -6,8 +6,6 @@
 package principal;
 
 import BaseDatos.BaseDatos;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import objetos.Libros;
 

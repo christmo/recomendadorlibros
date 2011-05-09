@@ -139,8 +139,7 @@ public class Caso2 {
                 }
             }
         }
-        if (Libros.size()
-                != 3) {
+        if (Libros.size() != 3) {
             Caso1 caso1 = new Caso1();
             String[] info = caso1.recomendacion3Libros(bd,3, false);
             if (Libros.size() == 1) {
@@ -166,7 +165,6 @@ public class Caso2 {
     private void llenarListaLibros(ArrayList<Integer> libros) {
         for (int idLibro : libros) {
             Libros.add(new Libros(idLibro, bd));
-
         }
     }
 }
