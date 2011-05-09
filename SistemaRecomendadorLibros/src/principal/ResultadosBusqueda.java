@@ -133,12 +133,11 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
             actualizarVistasLibro(listaLibros.get(opSelect));
 
             try {
-                if (info == null) {
-
-                    //Calcular libros como sugerencias
+                //Calcular libros como sugerencias
                     //Caso 3.
-                    String[] lib = new Caso3().librosCaso3(4, bd);
-
+                    String[] lib = new Caso3().librosCaso3(listaLibros.get(opSelect).getCategoria().getIdCategoria()
+                            , bd);
+                if (info == null) {                    
                     info = new Info_Libro(listaLibros.get(opSelect),
                             bd,
                             Integer.parseInt(lib[0]),
@@ -150,7 +149,13 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
                     info.setVisible(true);
                     info.setLocationRelativeTo(this);
                 } else {
-                    info.setLibroSeleccionado(listaLibros.get(opSelect));
+                    info.setLibroSeleccionado(listaLibros.get(opSelect),
+                            Integer.parseInt(lib[0]),
+                            lib[1],
+                            Integer.parseInt(lib[2]),
+                            lib[3],
+                            Integer.parseInt(lib[4]),
+                            lib[5]);
                     info.setVisible(true);
                     info.setLocationRelativeTo(this);
                 }

@@ -57,7 +57,7 @@ public class Buscador extends javax.swing.JFrame {
             //aplicar recomendación caso1
             System.out.println("CASO 1 : " + sesion[1]);
             Caso1 auxCaso1 = new Caso1();
-            String[] librosRecomendados = auxCaso1.recomendacion3Libros(bd,3, false);
+            String[] librosRecomendados = auxCaso1.recomendacion3Libros(bd, 3, false);
 
             //ID libros
             idLibro1 = Integer.parseInt(librosRecomendados[0]);
@@ -69,7 +69,6 @@ public class Buscador extends javax.swing.JFrame {
             lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[1] + ".jpg")));
             lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[3] + ".jpg")));
             lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados[5] + ".jpg")));
-
 
 
         } else {
@@ -102,7 +101,7 @@ public class Buscador extends javax.swing.JFrame {
 
         pnlIngresoTexto.setVisible(false);
         pnlRangoValores.setVisible(false);
-        this.setTitle("Rocomendador de Libros - Bienvenid@ " + sesion[2]);
+        this.setTitle("Recomendador de Libros - Bienvenid@ " + sesion[2]);
     }
 
     @SuppressWarnings("unchecked")
@@ -282,6 +281,11 @@ public class Buscador extends javax.swing.JFrame {
 
         lblLibro1B.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro1B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblLibro1B.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLibro1BMouseClicked(evt);
+            }
+        });
 
         lblLibro3B.setBackground(new java.awt.Color(255, 255, 255));
         lblLibro3B.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -407,6 +411,14 @@ public class Buscador extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_txtValFinKeyPressed
+
+    private void lblLibro1BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro1BMouseClicked
+        //Calcular 3 libros según categoría
+        //Presentar info de libro y las 3 recomendaciones
+
+        //Recomendaciones
+        
+    }//GEN-LAST:event_lblLibro1BMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;

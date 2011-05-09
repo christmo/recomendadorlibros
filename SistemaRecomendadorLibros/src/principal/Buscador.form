@@ -333,6 +333,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblLibro1BMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLibro3B">
       <Properties>
