@@ -220,6 +220,8 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
      * @param libroSeleccionado
      */
     private void actualizarVistasLibro(Libros libroSeleccionado) {
-        bd.actualizarVistasLibro(libroSeleccionado.getVistas() + 1, libroSeleccionado.getIdLibro());
+        int visto = libroSeleccionado.getVistas() + 1;
+        libroSeleccionado.setVistas(visto);
+        bd.actualizarVistasLibro(visto, libroSeleccionado.getIdLibro());
     }
 }

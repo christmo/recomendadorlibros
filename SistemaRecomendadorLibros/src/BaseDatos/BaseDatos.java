@@ -269,7 +269,7 @@ public class BaseDatos {
                 + "WHERE IDCATEGORIA IN ("
                 + "SELECT IDCATEGORIA "
                 + "FROM CATEGORIAS "
-                + "WHERE NOMBRE LIKE '%"+ txtIngresado +"%')";
+                + "WHERE NOMBRE LIKE '%" + txtIngresado + "%')";
         ResultSet rsLibros = ejecutarConsulta(sql);
         try {
             while (rsLibros.next()) {
@@ -322,7 +322,10 @@ public class BaseDatos {
         String sql = "SELECT "
                 + "IDLIBRO "
                 + "FROM LIBROS "
-                + "WHERE AUTOR like '%" + txtIngresado + "%'";
+                + "WHERE IDAUTOR IN ("
+                + "SELECT IDAUTOR "
+                + "FROM AUTORES "
+                + "WHERE NOMBRE LIKE '%" + txtIngresado + "%')";
         ResultSet rsLibros = ejecutarConsulta(sql);
         try {
             while (rsLibros.next()) {

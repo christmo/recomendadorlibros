@@ -37,9 +37,9 @@ public class Buscador extends javax.swing.JFrame {
     private String txtIngresado = "";
     private String txtValorInicial = "";
     private String txtValorFinal = "";
-    private int idLibro1;
-    private int idLibro2;
-    private int idLibro3;
+    private static int idLibro1;
+    private static int idLibro2;
+    private static int idLibro3;
 
     /** Creates new form Buscador */
     public Buscador() {
@@ -74,35 +74,61 @@ public class Buscador extends javax.swing.JFrame {
 
         } else {
             //aplicar recomendación caso 2
-            System.out.println("CASO 2");
-            Caso2 caso2 = new Caso2(bd);
-            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
-
-            try {
-                idLibro1 = librosRecomendados.get(0).getIdLibro();
-                lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen() + ".jpg")));
-            } catch (NullPointerException ex) {
-            } catch (IndexOutOfBoundsException iobe) {
-            }
-            try {
-                idLibro2 = librosRecomendados.get(1).getIdLibro();
-                lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen() + ".jpg")));
-            } catch (NullPointerException ex) {
-            } catch (IndexOutOfBoundsException iobe) {
-            }
-            try {
-                idLibro3 = librosRecomendados.get(2).getIdLibro();
-                lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen() + ".jpg")));
-            } catch (NullPointerException ex) {
-            } catch (IndexOutOfBoundsException iobe) {
-            }
-
+//            System.out.println("CASO 2");
+//            Caso2 caso2 = new Caso2(bd);
+//            ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
+//
+//            try {
+//                idLibro1 = librosRecomendados.get(0).getIdLibro();
+//                lblLibro1B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(0).getImagen() + ".jpg")));
+//            } catch (NullPointerException ex) {
+//            } catch (IndexOutOfBoundsException iobe) {
+//            }
+//            try {
+//                idLibro2 = librosRecomendados.get(1).getIdLibro();
+//                lblLibro2B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(1).getImagen() + ".jpg")));
+//            } catch (NullPointerException ex) {
+//            } catch (IndexOutOfBoundsException iobe) {
+//            }
+//            try {
+//                idLibro3 = librosRecomendados.get(2).getIdLibro();
+//                lblLibro3B.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgLibros/" + librosRecomendados.get(2).getImagen() + ".jpg")));
+//            } catch (NullPointerException ex) {
+//            } catch (IndexOutOfBoundsException iobe) {
+//            }
+            cargarLibrosRecomendadosHistorial(bd);
         }
 
 
         pnlIngresoTexto.setVisible(false);
         pnlRangoValores.setVisible(false);
         this.setTitle("Recomendador de Libros - Bienvenid@ " + sesion[2]);
+    }
+
+    public static void cargarLibrosRecomendadosHistorial(BaseDatos bd) {
+        //aplicar recomendación caso 2
+        System.out.println("CASO 2");
+        Caso2 caso2 = new Caso2(bd);
+        ArrayList<Libros> librosRecomendados = caso2.obtenerLibrosRecomendadosClienteHistorial(sesion[1]);
+
+        try {
+            idLibro1 = librosRecomendados.get(0).getIdLibro();
+            lblLibro1B.setIcon(new ImageIcon(Buscador.class.getResource("/imgLibros/" + librosRecomendados.get(0).getImagen() + ".jpg")));
+        } catch (NullPointerException ex) {
+        } catch (IndexOutOfBoundsException iobe) {
+        }
+        try {
+            idLibro2 = librosRecomendados.get(1).getIdLibro();
+            lblLibro2B.setIcon(new ImageIcon(Buscador.class.getResource("/imgLibros/" + librosRecomendados.get(1).getImagen() + ".jpg")));
+        } catch (NullPointerException ex) {
+        } catch (IndexOutOfBoundsException iobe) {
+        }
+        try {
+            idLibro3 = librosRecomendados.get(2).getIdLibro();
+            lblLibro3B.setIcon(new ImageIcon(Buscador.class.getResource("/imgLibros/" + librosRecomendados.get(2).getImagen() + ".jpg")));
+        } catch (NullPointerException ex) {
+        } catch (IndexOutOfBoundsException iobe) {
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +168,7 @@ public class Buscador extends javax.swing.JFrame {
 
         jLabel3.setText("Buscar Por:");
 
-        cbxBuscarPor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Título", "Categoría", "Año", "Palabras Clave", "Precio", "Autor" }));
+        cbxBuscarPor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Seleccionar>", "Título", "Categoría", "Año", "Palabras Clave", "Precio", "Autor" }));
         cbxBuscarPor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxBuscarPorActionPerformed(evt);
@@ -422,19 +448,18 @@ public class Buscador extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_txtValFinKeyPressed
-    
+
     private void lblLibro1BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro1BMouseClicked
-        new Caso3().presentarRecomendacionesInfoLibro(idLibro1,bd);
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro1, bd);
     }//GEN-LAST:event_lblLibro1BMouseClicked
 
     private void lblLibro2BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro2BMouseClicked
-        new Caso3().presentarRecomendacionesInfoLibro(idLibro2,bd);
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro2, bd);
     }//GEN-LAST:event_lblLibro2BMouseClicked
 
     private void lblLibro3BMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLibro3BMouseClicked
-        new Caso3().presentarRecomendacionesInfoLibro(idLibro3,bd);
+        new Caso3().presentarRecomendacionesInfoLibro(idLibro3, bd);
     }//GEN-LAST:event_lblLibro3BMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;
@@ -445,9 +470,9 @@ public class Buscador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblIngreso;
-    private javax.swing.JLabel lblLibro1B;
-    private javax.swing.JLabel lblLibro2B;
-    private javax.swing.JLabel lblLibro3B;
+    private static javax.swing.JLabel lblLibro1B;
+    private static javax.swing.JLabel lblLibro2B;
+    private static javax.swing.JLabel lblLibro3B;
     private javax.swing.JLabel lblMoneda;
     private javax.swing.JLabel lblValores;
     private javax.swing.JPanel pnlIngresoTexto;
@@ -464,42 +489,42 @@ public class Buscador extends javax.swing.JFrame {
 
     private void mostraParamentrosIngresar(int op) {
         switch (op) {
-            case 0: //Titulo
+            case 1: //Titulo
                 pnlIngresoTexto.setVisible(true);
                 pnlRangoValores.setVisible(false);
                 lblIngreso.setText("Título del Libro:");
                 break;
-            case 1: //Categoría del Libro:
+            case 2: //Categoría del Libro:
                 pnlIngresoTexto.setVisible(true);
                 pnlRangoValores.setVisible(false);
                 lblIngreso.setText("Categoría del Libro:");
                 break;
-            case 2://Años
+            case 3://Años
                 pnlRangoValores.setVisible(true);
                 pnlIngresoTexto.setVisible(false);
                 lblValores.setText("Entre los Años:");
                 lblMoneda.setVisible(false);
                 break;
-            case 3://Palabras Clave:
+            case 4://Palabras Clave:
                 pnlIngresoTexto.setVisible(true);
                 pnlRangoValores.setVisible(false);
                 lblIngreso.setText("Palabras Clave:");
                 break;
-            case 4: // Precio
+            case 5: // Precio
                 pnlRangoValores.setVisible(true);
                 pnlIngresoTexto.setVisible(false);
                 lblValores.setText("Precio entre:");
                 lblMoneda.setVisible(true);
                 break;
-            case 5: // Autor
+            case 6: // Autor
                 pnlIngresoTexto.setVisible(true);
                 pnlRangoValores.setVisible(false);
                 lblIngreso.setText("Nombre del Autor:");
                 break;
             default:
-                pnlIngresoTexto.setVisible(true);
+                pnlIngresoTexto.setVisible(false);
                 pnlRangoValores.setVisible(false);
-                lblIngreso.setText("Título del Libro:");
+                lblIngreso.setText("");
         }
     }
 
@@ -512,29 +537,33 @@ public class Buscador extends javax.swing.JFrame {
                 && !txtValorFinal.equals("")) {
             ArrayList<Libros> librosEncontrados = new ArrayList<Libros>();
             switch (op) {
-                case 0: //Titulo
+                case 1: //Titulo
                     librosEncontrados = bd.obtenerLibrosPorTitulo(txtIngresado, bd);
                     break;
-                case 1: //Categoría del Libro:
+                case 2: //Categoría del Libro:
                     librosEncontrados = bd.obtenerLibrosPorCategoria(txtIngresado, bd);
                     break;
-                case 2://Años
+                case 3://Años
                     librosEncontrados = bd.obtenerLibrosPorAnios(txtValorInicial, txtValorFinal, bd);
                     break;
-                case 3://Palabras Clave:
+                case 4://Palabras Clave:
                     librosEncontrados = bd.obtenerLibrosPorPalabraClave(txtIngresado, bd);
                     break;
-                case 4: // Precio
+                case 5: // Precio
                     librosEncontrados = bd.obtenerLibrosPorPrecio(txtValorInicial, txtValorFinal, bd);
                     break;
-                case 5: // Autor
+                case 6: // Autor
                     librosEncontrados = bd.obtenerLibrosPorAutor(txtIngresado, bd);
                     break;
             }
-            ResultadosBusqueda resultBusqueda = new ResultadosBusqueda(librosEncontrados, bd);
-            resultBusqueda.setVisible(true);
-            resultBusqueda.setLocationRelativeTo(this);
-            limpiarCampos();
+            if (librosEncontrados.size() > 0) {
+                ResultadosBusqueda resultBusqueda = new ResultadosBusqueda(librosEncontrados, bd);
+                resultBusqueda.setVisible(true);
+                resultBusqueda.setLocationRelativeTo(this);
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se ha encontrado ningún resultado para esa busqueda...", "Información...", 1);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No hay una opción a buscar...", "Error...", 0);
         }
