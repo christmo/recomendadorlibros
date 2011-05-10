@@ -548,4 +548,16 @@ public class BaseDatos {
         }
         return categ;
     }
+
+    /**
+     * Registra la compra realizada por un usuario.
+     * @return
+     */
+    public boolean registrarCompra(int idCliente,
+            int idLibro,
+            double precio){
+        String sql = "INSERT INTO VENTAS (IDCLIENTE, IDLIBRO, PRECIO, FECHA) " +
+                " VALUES("+idCliente+","+idLibro+","+precio+",NOW())";
+        return this.ejecutarSentencia(sql);
+    }
 }

@@ -314,11 +314,21 @@ public class Info_Libro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int val = JOptionPane.showConfirmDialog(this, "El valor sera debito de su cuenta.\n ¿De acuerdo?","Confirmación",JOptionPane.OK_CANCEL_OPTION);        
+        int val = JOptionPane.showConfirmDialog(this, "El valor será debitado " +
+                "de su cuenta.\n ¿De acuerdo?",
+                "Confirmación",JOptionPane.OK_CANCEL_OPTION);
         if (val == 0) {
-            //implementar el registro de la
-            //compra
-            JOptionPane.showMessageDialog(this, "Su compra ha sido realizada !!");
+            boolean std = bd.registrarCompra(
+                    Integer.parseInt(Buscador.sesion[1]),
+                    this.informacionLibro.getIdLibro(),
+                    this.informacionLibro.getPrecio()
+                    );
+            if (std) {
+                JOptionPane.showMessageDialog(this, "Su compra ha sido realizada !!");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Hay problemas al procesar la compra");
+            }            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
