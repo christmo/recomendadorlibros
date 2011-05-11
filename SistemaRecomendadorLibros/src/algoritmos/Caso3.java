@@ -93,6 +93,13 @@ public class Caso3 {
         //Calcular libros como sugerencias
         //Caso 3.
         Libros newBook = new Libros(idLibro, bd);
+
+        //Actualizar el numero de vistas
+        int visto = newBook.getVistas() + 1;
+        newBook.setVistas(visto);
+        bd.actualizarVistasLibro(visto, newBook.getIdLibro());
+
+
         String[] lib = new Caso3().librosCaso3(
                 newBook.getCategoria().getIdCategoria(),
                 bd,
